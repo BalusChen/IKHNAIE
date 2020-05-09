@@ -1,4 +1,4 @@
-![Ikhnaie](images/ikhnaie.jpeg)
+![Ikhnaie](assets/images/ikhnaie.jpeg)
 
 # IKHNAIE
 
