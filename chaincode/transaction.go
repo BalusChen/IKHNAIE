@@ -40,6 +40,8 @@ func (cc *CCTransaction) Invoke(stub shim.ChaincodeStubInterface) peer.Response 
 		return addTransaction(stub, args[1:])
 	case "getTransactionHistory":
 		return getTransactionHistory(stub, args[1:])
+	case "getLastTransactionRecord":
+		return getLastTransactionRecord(stub, args[1:])
 	default:
 		return shim.Error(fmt.Sprintf("unknown action: %q", action))
 	}
@@ -55,6 +57,18 @@ func addTransaction(stub shim.ChaincodeStubInterface, args []string) peer.Respon
 		return shim.Error(fmt.Sprintf("put state failed, err: %v", err))
 	}
 	return shim.Success(nil)
+}
+
+func getLastTransactionRecord(stub shim.ChaincodeStubInterface, args []string) peer.Response {
+	if len(args) < 1 {
+		return shim.Error("missing foodID argument")
+	}
+
+	record, err := stub.GetState(args[0])
+	if err != nil {
+		return shim.Error(fmt.Sprintf("get state failed, err: %v", err))
+	}
+	return shim.Success(record)
 }
 
 func getTransactionHistory(stub shim.ChaincodeStubInterface, args []string) peer.Response {
