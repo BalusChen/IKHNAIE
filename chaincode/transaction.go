@@ -27,13 +27,19 @@ func (cc *CCTransaction) Init(stub shim.ChaincodeStubInterface) peer.Response {
 }
 
 func (cc *CCTransaction) Invoke(stub shim.ChaincodeStubInterface) peer.Response {
-	fn, args := stub.GetFunctionAndParameters()
+	_, args := stub.GetFunctionAndParameters()
 
+	// args: ["action", foodID, ...]
+	if len(args) < 2 {
+		return shim.Error(fmt.Sprintf("wrong number of args"))
+	}
+
+	fn := args[0]
 	switch fn {
 	case "addTransaction":
-		return addTransaction(stub, args)
+		return addTransaction(stub, args[1:])
 	case "getTransactionHistory":
-		return getTransactionHistory(stub, args)
+		return getTransactionHistory(stub, args[1:])
 	default:
 		return shim.Error(fmt.Sprintf("unknown function %q", fn))
 	}
