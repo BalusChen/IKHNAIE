@@ -13,11 +13,3 @@ type Transaction struct {
 	Number     int64     `json:"number"`      // 交易数目
 	Price      float64   `json:"price"`       // 单价
 }
-
-type Product struct {
-	FoodID    int64         `json:"food_id"`    // 农产品 ID（唯一标识）
-	FoodName  string        `json:"food_name"`  // 农产品名
-	Birthday  time.Time     `json:"birthday"`   // 生产日期
-	ShelfLife time.Duration `json:"shelf_life"` // 保质期
-	// Ingredients []Product     `json:"ingredients"` // 组成材料
-}
